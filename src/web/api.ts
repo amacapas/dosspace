@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { DetailWorkspace } from './components/WorkspaceDetails'
+import { DetailWorkspace, Shipment } from './components/WorkspaceDetails'
 
 const BASE_URL = 'http://localhost:8080'
 
@@ -24,6 +24,30 @@ class DosspaceApi {
       return workspace
     } catch (err) {
       throw new Error('Unable to fetch workspace')
+    }
+  }
+
+  /** Add a table to a workspace */
+  static async addTableToWorkspace(workspaceId: string, buildNumber: string) {
+    try {
+      const req = await axios.post(`${BASE_URL}/${workspaceId}/table`, { buildNumber })
+      return req.data.table
+    } catch (err) {
+      throw new Error('Unable to add table to workspace')
+    }
+  }
+
+  /** Add a shipment to a table */
+  static async addShipmentToTable(
+    workspaceId: string,
+    tableId: string,
+    shipment: Partial<Shipment>
+  ) {
+    try {
+      const req = await axios.post(`${BASE_URL}/${workspaceId}/table/${tableId}/shipment`, shipment)
+      return req.data.shipment
+    } catch (err) {
+      throw new Error('Unable to add shipment to table')
     }
   }
 }

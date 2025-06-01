@@ -16,7 +16,7 @@ describe('Util tests', () => {
 
   beforeEach(() => {
     mock({ [path.resolve(__dirname, testDbString)]: '' })
-    reset(testDbString)
+    reset(testDbString, workspaceId)
   })
 
   afterEach(() => {
@@ -65,6 +65,45 @@ describe('Util tests', () => {
       utils.updateWorkspace(testDbString, workspace)
       const updatedWorkspace = utils.getWorkspace(testDbString, workspace.id)
       expect(updatedWorkspace.title).toEqual("Arnav's Shipping")
+    })
+  })
+
+  describe('addTableToWorkspace', () => {
+    it('adds a new table to a workspace', () => {
+      const workspace = utils.createWorkspace(testDbString)
+      const buildNumber = 'TEST-123'
+      const newTable = utils.addTableToWorkspace(testDbString, workspace.id, buildNumber)
+      
+      expect(newTable.buildNumber).toEqual(buildNumber)
+      expect(newTable.shipments).toEqual([])
+      
+      const updatedWorkspace = utils.getWorkspace(testDbString, workspace.id)
+      expect(updatedWorkspace.buildShipments).toHaveLength(2) // 1 default + 1 new
+      expect(updatedWorkspace.buildShipments[1].buildNumber).toEqual(buildNumber)
+    })
+  })
+
+  describe('addShipmentToTable', () => {
+    it('adds a new shipment to a table', () => {
+      const workspace = utils.createWorkspace(testDbString)
+      const table = workspace.buildShipments[0]
+      const shipment = {
+        id: createMockUuid(),
+        description: 'Test Shipment',
+        orderNumber: 'ORD-123',
+        cost: 1999 // $19.99
+      }
+      
+      const newShipment = utils.addShipmentToTable(testDbString, workspace.id, table.id, shipment)
+      
+      expect(newShipment.description).toEqual(shipment.description)
+      expect(newShipment.orderNumber).toEqual(shipment.orderNumber)
+      expect(newShipment.cost).toEqual(shipment.cost)
+      
+      const updatedWorkspace = utils.getWorkspace(testDbString, workspace.id)
+      const updatedTable = updatedWorkspace.buildShipments.find(t => t.id === table.id)
+      expect(updatedTable?.shipments).toHaveLength(2) // 1 default + 1 new
+      expect(updatedTable?.shipments[1].description).toEqual(shipment.description)
     })
   })
 })
