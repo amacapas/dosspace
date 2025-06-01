@@ -1,0 +1,46 @@
+/* .WorkspaceDetails {} */
+
+.worspaceDetails_wrapper {
+  display: flex;
+}
+
+.WorkspaceDetails__table {
+  width: 60%;
+}
+
+.WorkspaceDetails__header {
+  background-color: darkgreen;
+  color: #f1f1f1;
+  display: flex;
+  font-weight: bold;
+  padding: 5px 10px;
+}
+
+.WorkspaceDetails__header div {
+  width: 50%;
+}
+
+.WorkspaceDetails__row {
+  border-bottom: 1px solid darkgreen;
+  display: flex;
+  padding: 15px 0;
+}
+
+.WorkspaceDetails__row__cols {
+  width: 50%;
+}
+
+.WorkspaceDetails__row__cols > span {
+  display: block;
+}
+
+.WorkspaceDetails__row__shipment:nth-child(odd) {
+  background-color: #f1f1f1;
+}
+
+.WorkspaceDetails__row__shipment {
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+}

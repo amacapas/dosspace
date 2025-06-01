@@ -1,0 +1,23 @@
+.WorkspaceDetails__table__form,
+.WorkspaceDetails__shipment__form {
+  padding: 0 20px;
+}
+
+.WorkspaceDetails__table__form {
+  margin-bottom: 20px;
+}
+
+.WorkspaceDetails__table__form button,
+.WorkspaceDetails__shipment__form button {
+  padding: 7px 15px;
+}
+
+.WorkspaceDetails__table__form input {
+  padding: 7px;
+}
+
+.WorkspaceDetails__shipment__form input {
+  display: block;
+  margin-bottom: 5px;
+  padding: 7px;
+}
